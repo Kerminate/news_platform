@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Row, Col, Menu, Icon, Modal, Tabs, Form, Input, Button } from 'antd'
+import { Row, Col, Menu, Icon, Modal, Tabs, Form, Input, Button, message } from 'antd'
 import logo from '../../images/logo.png'
+import 'whatwg-fetch'
+import { Link } from 'react-router-dom'
 
 // const SubMenu = Menu.SubMenu
 // const MenuItemGroup = Menu.ItemGroup
@@ -34,7 +36,22 @@ class PCHeaderInit extends Component {
   }
 
   handleSubmit (e) {
+    // 页面开始向API进行提交数据
+    e.preventDefault()
+    const myFetchOptions = {
+      method: 'GET'
+    }
+    const formData = this.props.form.getFieldsValue()
 
+    /* eslint-disable no-undef */
+    fetch('http://newsapi.gugujiankong.com/Handler.ashx?action=register&username=userName&password=password&r_userName=' + formData.r_userName + '&r_password=' + formData.r_password + '&r_confirmPassword=' + formData.r_confirmPassword, myFetchOptions)
+      .then(response => response.json())
+      .then((json) => {
+        this.setState({userNickName: json.NickuserName, userid: json.UserId})
+      })
+
+    message.success('请求成功！')
+    this.setModalVisible(false)
   }
 
   render () {
@@ -43,6 +60,9 @@ class PCHeaderInit extends Component {
       ? <Menu.Item key='logout' className='register'>
         <Button type='primary'>{this.state.userNickName}</Button>
           &nbsp;&nbsp;
+        <Link target='_blank'>
+          <Button type='dashed'>个人中心</Button>
+        </Link>
           &nbsp;&nbsp;
         <Button type='ghost'>退出</Button>
       </Menu.Item>
