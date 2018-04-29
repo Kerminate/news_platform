@@ -1,18 +1,55 @@
 import React, { Component } from 'react'
-import { Row, Col, Menu, Icon } from 'antd'
+import { Row, Col, Menu, Icon, Modal, Tabs, Form, Input, Button } from 'antd'
 import logo from '../../images/logo.png'
 
 // const SubMenu = Menu.SubMenu
 // const MenuItemGroup = Menu.ItemGroup
+const FormItem = Form.Item
+const TabPane = Tabs.TabPane
 
-export default class PCHeader extends Component {
+class PCHeaderInit extends Component {
   constructor () {
     super()
     this.state = {
-      current: 'top'
+      current: 'top',
+      modalVisible: false,
+      action: 'login',
+      hasLogined: false,
+      userNickName: '',
+      userid: 0
     }
   }
+
+  setModalVisible (value) {
+    this.setState({modalVisible: value})
+  }
+
+  handleClick (e) {
+    if (e.key === 'register') {
+      this.setState({current: 'register'})
+      this.setModalVisible(true)
+    } else {
+      this.setState({current: e.key})
+    }
+  }
+
+  handleSubmit (e) {
+
+  }
+
   render () {
+    const { getFieldDecorator } = this.props.form
+    const userShow = this.state.hasLogined
+      ? <Menu.Item key='logout' className='register'>
+        <Button type='primary'>{this.state.userNickName}</Button>
+          &nbsp;&nbsp;
+          &nbsp;&nbsp;
+        <Button type='ghost'>退出</Button>
+      </Menu.Item>
+      : <Menu.Item key='register' className='register'>
+        <Icon type='appstore' />注册/登录
+      </Menu.Item>
+
     return (
       <header>
         <Row>
@@ -23,7 +60,7 @@ export default class PCHeader extends Component {
             </a>
           </Col>
           <Col span={16}>
-            <Menu mode='horizontal' selectedKeys={[this.state.current]}>
+            <Menu mode='horizontal' onClick={this.handleClick.bind(this)} selectedKeys={[this.state.current]}>
               <Menu.Item key='top'>
                 <Icon type='appstore' />头条
               </Menu.Item>
@@ -48,10 +85,32 @@ export default class PCHeader extends Component {
               <Menu.Item key='shishang'>
                 <Icon type='appstore' />时尚
               </Menu.Item>
+              {userShow}
             </Menu>
+            <Modal title='用户中心' wrapClassName='vertical-center-modal' visible={this.state.modalVisible} onCancel={() => this.setModalVisible(false)} onOk={() => this.setModalVisible(false)} okText='关闭'>
+              <Tabs type='card'>
+                <TabPane tab='注册' key='2'>
+                  <Form onSubmit={this.handleSubmit.bind(this)}>
+                    <FormItem label='账户'>
+                      <Input placeholder='请输入您的账号' {...getFieldDecorator('r_username')} />
+                    </FormItem>
+                    <FormItem label='密码'>
+                      <Input type='password' placeholder='请输入您的密码' {...getFieldDecorator('r_password')} />
+                    </FormItem>
+                    <FormItem label='确认密码'>
+                      <Input type='password' placeholder='请再次输入您的密码' {...getFieldDecorator('r_confirmPassword  ')} />
+                    </FormItem>
+                    <Button type='primary' htmlType='submit'>注册</Button>
+                  </Form>
+                </TabPane>
+              </Tabs>
+            </Modal>
           </Col>
         </Row>
       </header>
     )
   }
 }
+
+const PCHeader = Form.create({})(PCHeaderInit)
+export default PCHeader
