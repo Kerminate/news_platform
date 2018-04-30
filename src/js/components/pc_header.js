@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Row, Col, Menu, Icon, Modal, Tabs, Form, Input, Button, message } from 'antd'
-import logo from '../../images/logo.png'
-import 'whatwg-fetch'
 import { Link } from 'react-router-dom'
+import 'whatwg-fetch'
 
 // const SubMenu = Menu.SubMenu
 // const MenuItemGroup = Menu.ItemGroup
@@ -107,7 +106,7 @@ class PCHeaderInit extends Component {
         <Row>
           <Col span={4} offset={2}>
             <a href='/' className='logo'>
-              <img src={logo} alt='logo' />
+              <img src={require('../../images/logo.png')} alt='logo' />
               <span>ReactNews</span>
             </a>
           </Col>

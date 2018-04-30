@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PCHeader from './pc_header'
 import PCFooter from './pc_footer'
+import PCNewsContainer from './pc_newscontainer'
 import '../../css/pc.css'
 
 export default class PCIndex extends Component {
@@ -8,6 +9,7 @@ export default class PCIndex extends Component {
     return (
       <div>
         <PCHeader />
+        <PCNewsContainer />
         <PCFooter />
       </div>
     )

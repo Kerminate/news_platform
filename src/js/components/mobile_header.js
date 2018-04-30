@@ -78,9 +78,9 @@ class MobileHeaderInit extends Component {
   render () {
     const { getFieldDecorator } = this.props.form
     const userShow = this.state.hasLogined
-    ? <Link>
-      <Icon type='inbox' />
-    </Link>
+      ? <Link to='/'>
+        <Icon type='inbox' />
+      </Link>
     : <Icon type='setting' onClick={this.login.bind(this)} />
 
     return (
