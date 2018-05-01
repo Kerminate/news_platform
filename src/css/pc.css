@@ -121,3 +121,14 @@
   padding: 15px !important;
 }
 
+.imageblock {
+  float: left;
+}
+
+.custom-card {
+  padding: 5px;
+}
+
+.custom-card p {
+  color: #999;
+}
