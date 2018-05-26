@@ -1,5 +1,5 @@
 import React from 'react'
-import { Row, Col, Form, Input, Card } from 'antd'
+import { Row, Col, Form, Input, Card, Button, notification } from 'antd'
 
 const FormItem = Form.Item
 
@@ -25,8 +25,36 @@ class CommonCommentsInit extends React.Component {
       }))
   }
 
-  handleSubmit () {
+  handleSubmit (e) {
+    e.preventDefault()
+    const formData = this.props.form.getFieldsValue()
+    const myFetchOptions = {
+      method: 'GET'
+    }
 
+    /* eslint-disable no-undef */
+    fetch('http://newsapi.gugujiankong.com/Handler.ashx?action=comment&userid=' + localStorage.userid +
+        '&uniquekey=' + this.props.uniquekey +
+        '&comment=' + formData.remark, myFetchOptions)
+      .then(response => response.json())
+      .then(json => {
+        this.componentDidMount()
+      })
+  }
+
+  addUserCollection () {
+    const myFetchOptions = {
+      method: 'GET'
+    }
+
+    /* eslint-disable no-undef */
+    fetch('http://newsapi.gugujiankong.com/Handler.ashx?action=uc&userid=' + localStorage.userid +
+      '&uniquekey=' + this.props.uniquekey, myFetchOptions)
+      .then(response => response.json())
+      .then(json => {
+        //收藏成功以后进行一下全局的提醒
+        notification['success']({ message: 'ReactNews提醒', description: '收藏此文章成功' })
+      })
   }
 
   render () {
@@ -47,11 +75,13 @@ class CommonCommentsInit extends React.Component {
             { commentList }
             <Form onSubmit={this.handleSubmit.bind(this)}>
               <FormItem label='您的评论'>
-                  {getFieldDecorator('password', {})(
+                  {getFieldDecorator('remark', { initialValue: '' })(
                     <Input type='textarea' placeholder='随便写' />
                   )}
                 </FormItem>
                 <Button type='primary' htmlType='submit'>提交评论</Button>
+                &nbsp;&nbsp;
+                <Button type='primary' htmlType='button' onClick={this.addUserCollection.bind(this)}>收藏该文章</Button>                
             </Form>
           </Col>
         </Row>

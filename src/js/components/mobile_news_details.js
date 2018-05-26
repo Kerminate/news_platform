@@ -2,6 +2,7 @@ import React from 'react'
 import { Row, Col, BackTop } from 'antd'
 import MobileHeader from './mobile_header'
 import MobileFooter from './mobile_footer'
+import CommonComments from './common_comments'
 
 export default class PCNewsDetails extends React.Component {
   constructor () {
@@ -23,7 +24,6 @@ export default class PCNewsDetails extends React.Component {
       .then(json => {
         this.setState({newsItem: json})
         document.title = this.state.newsItem.title + 'React News | React 驱动的新闻平台'
-        console.log(this.state.newsItem.pagecontent)
       })
   }
 
@@ -39,6 +39,8 @@ export default class PCNewsDetails extends React.Component {
           <Row>
             <Col span={24} className='container'>
               <div className='articleContainer' dangerouslySetInnerHTML={this.createMarkup()}></div>
+              <hr/>
+              <CommonComments uniquekey={this.props.match.params.uniquekey}></CommonComments>
             </Col>
           </Row>
           <MobileFooter></MobileFooter>
