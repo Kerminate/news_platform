@@ -91,7 +91,7 @@ class PCHeaderInit extends Component {
       ? <Menu.Item key='logout' className='register'>
         <Button type='primary'>{this.state.userNickName}</Button>
           &nbsp;&nbsp;
-        <Link to='/'>
+        <Link to={`/usercenter`}>
           <Button type='dashed'>个人中心</Button>
         </Link>
           &nbsp;&nbsp;

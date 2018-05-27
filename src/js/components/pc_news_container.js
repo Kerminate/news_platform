@@ -21,10 +21,10 @@ export default class PCNewsContainer extends Component {
             <div className='leftContainer'>
               <div className='carousel'>
                 <Carousel {...settings}>
-                  <div><img src={require('../../images/carousel_1.jpg')} alt='carousel_1' />></div>
-                  <div><img src={require('../../images/carousel_2.jpg')} alt='carousel_2' />></div>
-                  <div><img src={require('../../images/carousel_3.jpg')} alt='carousel_3' />></div>
-                  <div><img src={require('../../images/carousel_4.jpg')} alt='carousel_4' />></div>
+                  <div><img src={require('../../images/carousel_1.jpg')} alt='carousel_1' /></div>
+                  <div><img src={require('../../images/carousel_2.jpg')} alt='carousel_2' /></div>
+                  <div><img src={require('../../images/carousel_3.jpg')} alt='carousel_3' /></div>
+                  <div><img src={require('../../images/carousel_4.jpg')} alt='carousel_4' /></div>
                 </Carousel>
               </div>
               <PCNewsImageBlock count={6} type='guoji' width='400px' cartTitle='国际头条' imageWidth='112px' />
