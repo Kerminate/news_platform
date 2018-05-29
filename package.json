@@ -19,6 +19,8 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
-    "eslint-plugin-promise": "^3.8.0"
+    "eslint-plugin-promise": "^3.8.0",
+    "less": "^3.0.4",
+    "less-loader": "^4.1.0"
   }
 }

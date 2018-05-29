@@ -1,17 +1,13 @@
 import React from 'react'
 import { Row, Col } from 'antd'
 import { Link } from 'react-router-dom'
-import Tloader from 'react-touch-loader'
+import ReactPullToRefresh from 'react-pull-to-refresh'
 
 export default class MobileList extends React.Component {
   constructor () {
     super()
     this.state = {
-      news: '',
-      count: 5,
-      hasMore: 0,
-      initializing: 1,
-      refreshedAt: Date.now()
+      news: ''
     }
   }
 
@@ -28,39 +24,21 @@ export default class MobileList extends React.Component {
     )
   }
 
-  loadMore (resolve) {
-    setTimeout(() => {
-      const count = this.state
-      this.setState({ count: count + 5 })
-      const myFetchOptions = {
-        method: 'GET'
-      }
+  handleRefresh (resolve) {
+    const myFetchOptions = {
+      method: 'GET'
+    }
 
-      /* eslint-disable no-undef */
-      fetch('http://newsapi.gugujiankong.com/Handler.ashx?action=getnews&type=' + this.props.type +
-          '&count=' + this.state.count, myFetchOptions)
-        .then(response => response.json())
-        .then(json => this.setState({
-          news: json
-        })) 
-
-      this.setState({ hasMore: count > 0 && count < 50 })
-      resolve()
-      
-    }, 2e3)
-  }
-
-  componentDidMount () {
-    setTimeout(() => {
-      this.setState({
-        hasMore: 1,
-        initializing: 2
-      })
-    }, 2e3)
+    /* eslint-disable no-undef */
+    fetch('http://newsapi.gugujiankong.com/Handler.ashx?action=getnews&type=yule&count=20', myFetchOptions)
+      .then(response => response.json())
+      .then(json => this.setState({ news: json })
+    )
+    resolve()
   }
 
   render () {
-    const { news, hasMore, initializing, refreshedAt } = this.state
+    const { news } = this.state
     const newsList = news.length
       ? news.map((newsItem, index) => (
         <section key={index} className='m_article list-item special_section clearfix'>
@@ -88,9 +66,13 @@ export default class MobileList extends React.Component {
       <div>
         <Row>
           <Col span={24}>
-            <Tloader className='main' onLoadMore={this.loadMore.bind(this)} hasMore={hasMore} initializing={initializing}>
-              {newsList}
-            </Tloader>
+            <ReactPullToRefresh onRefresh={this.handleRefresh.bind(this)} style={{ textalign: 'center' }}>
+              <span className='genericon genericon-next'>
+                <div>
+                  {newsList}
+                </div>
+              </span>
+            </ReactPullToRefresh>
           </Col>
         </Row>
       </div>
